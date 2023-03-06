@@ -10,6 +10,16 @@ public class Kommune {
     private String kode;
     private String navn;
     private String href;
+    @Column(name = "hrefphoto")
+    private String hrefPhoto;
+
+    public String getHrefPhoto() {
+        return hrefPhoto;
+    }
+
+    public void setHrefPhoto(String hrefPhoto) {
+        this.hrefPhoto = hrefPhoto;
+    }
 
     @ManyToOne
     @JoinColumn(name = "regionkode", referencedColumnName = "kode")
