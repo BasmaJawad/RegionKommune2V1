@@ -28,7 +28,7 @@ public class ControllerExceptionHandler {
                 new Date(),
                 ex.getMessage() + "  yyyyyyy",
                 request.getDescription(true));
-        return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ArithmeticException.class)
