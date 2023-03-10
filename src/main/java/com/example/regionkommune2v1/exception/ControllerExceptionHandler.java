@@ -21,5 +21,24 @@ public class ControllerExceptionHandler {
         return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(ResourceNotFoundException.class)
+    ResponseEntity<ErrorMessage> resourceNotFoundException(Exception ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(
+                HttpStatus.NOT_FOUND.value(),
+                new Date(),
+                ex.getMessage() + "  yyyyyyy",
+                request.getDescription(true));
+        return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
+    @ExceptionHandler(ArithmeticException.class)
+    ResponseEntity<ErrorMessage> globalArithmeticExceptionHandler(Exception ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(
+                HttpStatus.I_AM_A_TEAPOT.value(),
+                new Date(),
+                ex.getMessage() + "  du dividerede lige med nul",
+                request.getDescription(true));
+        return new ResponseEntity<>(message, HttpStatus.I_AM_A_TEAPOT);
+    }
 }
+

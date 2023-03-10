@@ -1,7 +1,9 @@
 package com.example.regionkommune2v1.controller;
 
+import com.example.regionkommune2v1.exception.ResourceNotFoundException;
 import com.example.regionkommune2v1.model.Kommune;
 import com.example.regionkommune2v1.repository.KommuneRepository;
+import com.example.regionkommune2v1.repository.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ public class KommuneRESTController {
 
     @Autowired
     KommuneRepository kommuneRepository;
+    @Autowired
+    private RegionRepository regionRepository;
 
     @GetMapping("/kommuner")
     public List<Kommune> getAllRegions() {
@@ -34,9 +38,14 @@ public class KommuneRESTController {
         //System.out.println("navn=" + name);
         //Optional<Kommune> kom = kommuneRepository.findKommuneByNavn(name);
         //System.out.printf("kom=" + kom.isPresent());
-        return kommuneRepository.findKommuneByNavn(name).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Kommune med navn="+name));
+        return kommuneRepository.findKommuneByNavn(name).orElseThrow(()-> new ResourceNotFoundException("Kommune med navn="+name));
     }
 
+    @GetMapping("kommuner/region/kode/{code}")
+    public List<Kommune> getKommunerByRegionKode(@PathVariable String code) {
+        regionRepository.findById(code).orElseThrow(()-> new ResourceNotFoundException("Region med kode=" + code));
+        return kommuneRepository.findKommuneByRegionKode(code);
+    }
 
     @PostMapping("/kommune")
     @ResponseStatus(HttpStatus.CREATED)
