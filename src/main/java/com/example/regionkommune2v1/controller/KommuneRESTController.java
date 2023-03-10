@@ -31,9 +31,9 @@ public class KommuneRESTController {
 
     @GetMapping("kommune/navn/{name}")
     public Kommune getKommuneByName(@PathVariable String name) {
-        System.out.println("navn=" + name);
-        Optional<Kommune> kom = kommuneRepository.findKommuneByNavn(name);
-        System.out.printf("kom=" + kom.isPresent());
+        //System.out.println("navn=" + name);
+        //Optional<Kommune> kom = kommuneRepository.findKommuneByNavn(name);
+        //System.out.printf("kom=" + kom.isPresent());
         return kommuneRepository.findKommuneByNavn(name).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Kommune med navn="+name));
     }
 
