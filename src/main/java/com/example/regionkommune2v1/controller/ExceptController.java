@@ -37,12 +37,24 @@ public class ExceptController {
         return "" + i1;
     }
 
-
     @GetMapping("/loop/{iloop}")
     public String loop(@PathVariable int iloop) {
         int i2 = 0;
         for (int i1 = 0; i1 < iloop; i1++) {
             i2++;
+        }
+        return "" + i2;
+    }
+
+    @GetMapping("/loop2/{iloop}")
+    public String loop2(@PathVariable int iloop) {
+        int i2 = 1000000000;
+        for (int i1 = 0; i1 < iloop; i1++) {
+            try {
+                i2++;
+            } catch (RuntimeException err) {
+                return err.getMessage();
+            }
         }
         return "" + i2;
     }
